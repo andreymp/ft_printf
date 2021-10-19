@@ -6,76 +6,77 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:56:26 by jobject           #+#    #+#             */
-/*   Updated: 2021/10/18 19:56:28 by jobject          ###   ########.fr       */
+/*   Updated: 2021/10/19 19:46:10 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*new_str(const char	*s, int	num, char	c)
+int	choose_option(const char	*s, va_list	ap, int index)
 {
-	char	*str;
+	if (*(s + index + 1) == 'd' || *(s + index + 1) == 'i')
+		return (ft_decimal(ap));
+	if (*(s + index + 1) == 'c')
+		return (ft_char(ap));
+	if (*(s + index + 1) == 's')
+		return (ft_string(ap));
+	if (*(s + index + 1) == 'p')
+		return (ft_pointer(ap));
+	if (*(s + index + 1) == 'u')
+		return (ft_ud(ap));
+	if (*(s + index + 1) == 'x')
+		return (ft_hex_lower(ap));
+	if (*(s + index + 1) == 'X')
+		return (ft_hex_upper(ap));
+	if (*(s + index + 1) == '%')
+		return (ft_percent());
+	return (-1);
+}
+
+int	pars_string(const char	*s, va_list	ap)
+{
+	int		len;
 	int		i;
 
 	i = 0;
-	str = (char *) malloc(num + 1);
-	if (!str)
-		return (NULL);
-	while (*s != '%')
-		*(str + i++) = *s++;
-	while (*s != c)
-		s++;
-	*(str + i++) = c;
-	s += 2;
-	while (*s)
-		*(str + i++)  = *s++;
-	*(str + i) = '\0';
-	return (str);
-}
-
-char	*choose_option(const char	*s)//, va_list	ap)
-{
-	int i;
-
-	i = 0;
-	while (*(s + i) != '%')
+	len = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == '%' && *(s + i + 1))
+		{
+			len += choose_option(s, ap, i);
+			i++;
+		}
+		else
+			ft_putchar_fd(*(s + i), 1);	
 		i++;
-	if (*(s + i + 1) == '%')
-		return (new_str(s, ft_strlen(s) - 1, '%'));
-	return (NULL);
+		len++;
+	}
+	return (len);
 }
 
 int	ft_printf(const char	*s, ...)
 {
 	va_list	ap;
-	char	*res;
-	int		i;
 	int		ret_value;
 
+	ret_value = 0;
 	va_start(ap, s);
-	i = 0;
-	while (*(s + i) && *(s + i) != '%')
-		i++;
-	res = NULL;
-	if (*(s + i) == '%')
-		res = choose_option(s);//, ap);
+	ret_value = pars_string(s, ap);
 	va_end(ap);
-	if (res)
-	{
-		ft_putstr_fd(res, 1);
-		ret_value = ft_strlen(res);
-		free (res);
-	}
-	else
-		ft_putstr_fd((char *) s, 1);
-	ret_value = -1;
 	return (ret_value);
 }
 
 #include <stdio.h>
 int main()
 {
-	printf("50 of smack my ass here");
+	int a = -510;
+	printf("%d", printf("%u\n", a));
 	puts("");
-	ft_printf("50 of smack my ass here");
+	printf("%d", ft_printf("%u\n", a));
 }
+
+/*
+обработать отрицательный u
+пересмотреть p (NULL рабочий)
+*/

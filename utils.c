@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 15:38:30 by jobject           #+#    #+#             */
-/*   Updated: 2021/10/19 19:44:57 by jobject          ###   ########.fr       */
+/*   Updated: 2021/10/20 21:00:53 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,23 @@ int	get_length(int n)
 	return (size);
 }
 
-int	to_hex(unsigned long long	dig, char	*set)
+int	get_ulength(unsigned int n)
+{
+	int	size;
+
+	size = 0;
+	while (n / 10)
+	{
+		size++;
+		n /= 10;
+	}
+	size++;
+	if (n < 0)
+		size++;
+	return (size);
+}
+
+int	to_hex(unsigned	long long dig, char	*set)
 {
 	char	hex[100];
 	int		i;
@@ -49,4 +65,23 @@ int	to_hex(unsigned long long	dig, char	*set)
 		j--;
 	}
 	return (i);
+}
+
+void	ft_putunbr_fd(unsigned int num, int fd)
+{
+	unsigned int	length;
+	unsigned int	i;
+	char			res[11];
+
+	length = get_ulength(num);
+	i = length - 1;
+	while (i && num / 10)
+	{
+		*(res + i) = num % 10 + 48;
+		num /= 10;
+		i--;
+	}
+	*(res + i) = num + 48;
+	ft_putstr_fd(res, fd);
+	ft_bzero(res, 11);
 }

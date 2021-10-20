@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 17:42:47 by jobject           #+#    #+#             */
-/*   Updated: 2021/10/19 19:16:56 by jobject          ###   ########.fr       */
+/*   Updated: 2021/10/20 20:09:37 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_decimal(va_list ap)
 {
-	int decimal;
+	int	decimal;
 
 	decimal = va_arg(ap, int);
 	ft_putnbr_fd(decimal, 1);
 	return (get_length(decimal) - 1);
 }
 
-int ft_char(va_list ap)
+int	ft_char(va_list ap)
 {
 	char	code;
 
@@ -35,6 +35,11 @@ int	ft_string(va_list	ap)
 	char	*str;
 
 	str = va_arg(ap, char *);
+	if (!str)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (ft_strlen("(null)") - 1);
+	}
 	ft_putstr_fd(str, 1);
 	return (ft_strlen(str) - 1);
 }
@@ -42,7 +47,7 @@ int	ft_string(va_list	ap)
 int	ft_percent(void)
 {
 	ft_putchar_fd('%', 1);
-	return (1);
+	return (0);
 }
 
 int	ft_hex_lower(va_list	ap)

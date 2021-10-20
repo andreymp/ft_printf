@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 19:56:26 by jobject           #+#    #+#             */
-/*   Updated: 2021/10/19 19:46:10 by jobject          ###   ########.fr       */
+/*   Updated: 2021/10/20 21:01:06 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	pars_string(const char	*s, va_list	ap)
 			i++;
 		}
 		else
-			ft_putchar_fd(*(s + i), 1);	
+			ft_putchar_fd(*(s + i), 1);
 		i++;
 		len++;
 	}
@@ -66,17 +66,3 @@ int	ft_printf(const char	*s, ...)
 	va_end(ap);
 	return (ret_value);
 }
-
-#include <stdio.h>
-int main()
-{
-	int a = -510;
-	printf("%d", printf("%u\n", a));
-	puts("");
-	printf("%d", ft_printf("%u\n", a));
-}
-
-/*
-обработать отрицательный u
-пересмотреть p (NULL рабочий)
-*/

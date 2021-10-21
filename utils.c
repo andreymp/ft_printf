@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 15:38:30 by jobject           #+#    #+#             */
-/*   Updated: 2021/10/20 21:00:53 by jobject          ###   ########.fr       */
+/*   Updated: 2021/10/21 16:27:14 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	to_hex(unsigned	long long dig, char	*set)
 	int		i;
 	int		j;
 
+	ft_bzero(hex, 100);
 	i = 0;
 	while (dig / 16)
 	{
@@ -64,6 +65,7 @@ int	to_hex(unsigned	long long dig, char	*set)
 		ft_putchar_fd(*(hex + j), 1);
 		j--;
 	}
+	ft_bzero(hex, 100);
 	return (i);
 }
 
@@ -73,6 +75,7 @@ void	ft_putunbr_fd(unsigned int num, int fd)
 	unsigned int	i;
 	char			res[11];
 
+	ft_bzero(res, 11);
 	length = get_ulength(num);
 	i = length - 1;
 	while (i && num / 10)
